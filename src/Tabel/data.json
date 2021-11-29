@@ -1,0 +1,20 @@
+[
+    {
+        "id":1,
+        "nume":"Stefania",
+        "prenume":"Moraru",
+        "activitate":2,
+        "nr_tel":"0737256346",
+        "mail":"morarustefania20@stud.ase.ro"
+        
+    },
+    {
+        "id":2,
+        "nume":"Olaru",
+        "prenume":"Mara",
+        "activitate":2,
+        "nr_tel":"0722620120",
+        "mail":"olarumara20@stud.ase.ro"
+    }
+]
+

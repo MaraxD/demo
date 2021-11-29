@@ -1,0 +1,67 @@
+@import '../global.scss';
+
+.Navbar{
+    width: 100%;
+    height: 80px;
+    font-family: $text-font-family;
+    display: flex;
+    border-bottom: 1px solid #f2f2f2;
+}
+
+
+
+.Navbar .leftSide{
+    flex:50%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.Navbar .leftSide div{
+    max-height: 80px;
+    color: $logo-grey;
+    font-size: 25px;
+    margin-left: 15px;
+    font-weight: bold;
+}
+
+.Navbar .leftSide img{
+    display: none;
+    margin-left: 20px;
+    width: 50px;
+    height: 50px;
+}
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 850px){
+    .Navbar .leftSide div{
+        font-size: 20px;
+    }
+}
+
+@media only screen and (max-width: 750px){
+    .Navbar .leftSide div{
+        font-size: 20px;
+    }
+}
+
+//if the width is less than that the logo appears
+@media only screen and (max-width: 650px){
+    .Navbar .leftSide img{
+        display: flex;
+    }
+
+    .Navbar .leftSide div{
+        display: none;
+    }
+}
+
+
+

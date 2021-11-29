@@ -1,0 +1,33 @@
+$width-mobile: 768px;
+$width-tablet: 1024px;
+
+$bg-white: #ffffff;
+$bg-grey: #f2f2f2;
+
+$logo-grey: #747474;
+$nav-text-color: #333;
+
+$card-bg-grey: #e8e8e8;
+
+$btn-black: #000000;
+$btn-text-color: #f2f2f2;
+$btn-border-color: #4c4c4c;
+
+$link-color-blue: #203A61;
+
+$input-border-color: #4c4c4c;
+
+$text-font-family: Segoe UI, SegoeUI, "Helvetica Neue", Helvetica, Arial,
+  sans-serif;
+
+@mixin mobile {
+  @media (max-width: #{$width-mobile}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: #{$width-tablet}) {
+    @content;
+  }
+}
