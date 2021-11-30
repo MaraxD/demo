@@ -15,7 +15,7 @@ function Tabel() {
                     <a href="rep">Reprezentare</a>
                     <a href="hr">HR</a>
                 </div>
-            <table>
+            <table id="table-to-xls">
                 <thead>
                     <tr>
                         <th>Nume</th>
