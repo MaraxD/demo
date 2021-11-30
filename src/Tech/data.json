@@ -15,6 +15,15 @@
         "activitate":2,
         "nr_tel":"0722620120",
         "mail":"olarumara20@stud.ase.ro"
+    },
+    {
+        "id":3,
+        "nume":"John",
+        "prenume":"Doe",
+        "activitate":1,
+        "nr_tel":"0755620120",
+        "mail":"johndoe20@stud.ase.ro"
     }
+
 ]
 

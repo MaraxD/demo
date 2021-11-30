@@ -3,6 +3,12 @@ import './tech.scss'
 import data from './data.json'
 import './link'
 
+const getColor=(activitate)=>{
+    if(activitate<2) return 'red';
+    return ' ';
+};
+
+
 function Tabel() {
     
     const[members, setMembers]=useState(data);
@@ -38,9 +44,10 @@ function Tabel() {
 
                 <tbody>
                     {members.map((member)=>
-                        <tr>
+                        <tr style={{color:getColor(member.activitate)}}>
                             <td>{member.nume}</td>
                             <td>{member.prenume}</td>
+                            
                             <td>{member.activitate}</td>
                             <td>{member.nr_tel}</td>
                             <td>{member.mail}</td>
