@@ -1,22 +1,25 @@
 @import '../global.scss';
 
-//border radius
-
 .table-container{
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 10px;
-    
+    position:relative;
 }
 
 .links{
-    padding-left:8px;
-    padding-right:8px;
+    padding-left:30px;
     padding-top:50px;
     padding-bottom: 10px;
+    list-style-type: none;
+    display: flex;
+    width: 90vw;
+    justify-content: center;
+
 }
+
 
 .links a{
     color:black;
@@ -24,10 +27,11 @@
     font-size:15px;
     margin-left: 15px;
     text-decoration: none;
-    padding-right: 8px;
     letter-spacing: 0.5px;
     padding: 0 10px;
     display: inline-block;
+   
+    cursor:pointer;
 }
 
 .links a::after{
@@ -37,37 +41,49 @@
     height:2px;
     background: black;
     text-decoration: underline;
+    transform: translate3d(0%, 0, 0);//apare linia de la stanga la dreapta
+    transition:all linear 240ms;
 }
 
 .links a:hover::after{
     width:100%;
     text-decoration: underline;
+
 }
 
 .links a:active{
     transition: none;
     background-color: white;
+
 }
 //underline sa ramana dupa ce a fost departamentul selectat
 
 table{
     margin-left: auto;
     margin-right: auto;
-
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
+table tr th,
+table tr tb {//pentru colturile rotunde
+    text-align: center;
+    border-radius: 20px 20px 20px 20px;
+    padding: 12px;
+}
 
 thead{
     color: white;
+    min-width: 1px;
 }
 
 
 th,td{
-    border: 10px solid white;
+    border: 5px solid white;
     text-align: center;
-    padding: 10px;
+    padding: 4px;
     font-size: 15px;
-    font-family: $text-font-family;
+    font-family: $text-font-family
 }
 
 th{
@@ -75,7 +91,8 @@ th{
 }
 
 td{
-    background-color: rgb(243, 243, 243);
+    background-color: rgb(198, 220, 226);
+    border-radius: 10px 10px 10px 10px;
 }
 
 .save-button{
@@ -96,3 +113,17 @@ button {
     cursor: pointer;
   }
 
+  @media only screen and (max-width: 850px){
+    .save-button{
+        padding-left: 550px;
+    }
+}
+
+@media only screen and (max-width: 750px){
+    .save-button{
+        padding-left: 350px;
+    }
+}
+
+
+  

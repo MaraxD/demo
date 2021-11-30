@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
-import './tabel.scss'
+import './tech.scss'
 import data from './data.json'
+import './link'
 
 function Tabel() {
     
@@ -8,12 +9,20 @@ function Tabel() {
 
     return (
         <div className="tabel-container">
-
                 <div className="links"> 
-                    <a href="tech">Tech</a>
-                    <a href="promo">Promovare</a>
-                    <a href="rep">Reprezentare</a>
-                    <a href="hr">HR</a>
+                    <li class="active">
+                        <a href="tech">Tech</a>
+                    </li>
+                    <li class>
+                        <a href="promo">Promovare</a>
+                    </li>
+                    <li class>
+                        <a href="rep">Reprezentare</a>
+                    </li>
+                    <li class>
+                        <a href="hr">HR</a>
+                    </li>
+                
                 </div>
             <table id="table-to-xls">
                 <thead>
