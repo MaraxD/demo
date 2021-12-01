@@ -2,7 +2,8 @@ import React,{useState} from 'react'
 import './tech.scss'
 import data from './data.json'
 import './link'
-//scriu ceva
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+
 const getColor=(activitate)=>{
     if(activitate<2) return 'red';
     return ' ';
@@ -30,17 +31,25 @@ function Tabel() {
                     </li>
                 
                 </div>
-            <table id="table-to-xls">
-                <thead>
-                    <tr>
-                        <th>Nume</th>
-                        <th>Prenume</th>
-                        <th>Numar perioade active</th>
-                        <th>Numar de telefon</th>
-                        <th>Adresa de mail institutionala</th>
-                        <th>Platforme</th>
-                    </tr>
-                </thead> 
+            <table className="table" id="table-to-xls">
+                <ReactHTMLTableToExcel
+                    id="xls-button"
+                    className="download"
+                    table="table-to-xls"
+                    filename="tablexls"
+                    sheet="tablexls"
+                    buttonText="Export Data to Excel Sheet"/>
+                   
+                    <thead>
+                        <tr>
+                            <th>Nume</th>
+                            <th>Prenume</th>
+                            <th>Numar perioade active</th>
+                            <th>Numar de telefon</th>
+                            <th>Adresa de mail institutionala</th>
+                            <th>Platforme</th>
+                        </tr>
+                    </thead> 
 
                 <tbody>
                     {members.map((member)=>
@@ -62,9 +71,7 @@ function Tabel() {
                 <button> save changes</button>
             </div>
             
-            <div className="excel-button">
-                <button> export as excel</button>
-            </div>
+            
             
         </div>
     )
