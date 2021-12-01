@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import './tech.scss'
 import data from './data.json'
 import './link'
-
+//scriu ceva
 const getColor=(activitate)=>{
     if(activitate<2) return 'red';
     return ' ';
