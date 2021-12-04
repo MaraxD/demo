@@ -7,15 +7,14 @@
     align-items: center;
     margin-top: 10px;
     position:relative;
+    justify-content: center;
 }
 
 .links{
-    padding-left:30px;
     padding-top:50px;
-    padding-bottom: 10px;
+    padding-bottom: 50px;
     list-style-type: none;
     display: flex;
-    width: 90vw;
     justify-content: center;
 
 }
@@ -34,6 +33,8 @@
     cursor:pointer;
 }
 
+
+
 .links a::after{
     content: "";
     display: block;
@@ -45,18 +46,25 @@
     transition:all linear 240ms;
 }
 
-.links a:hover::after{
+.active, a:hover {
+    background-color: #c6dce2;
+    border-radius: 10px 10px ;
+    transition: .5s;
+}
+
+
+
+/*.links a:hover::after{
     width:100%;
     text-decoration: underline;
 
+}*/
+
+.active, a::after{
+    background-color: none;
+
 }
 
-.links a:active{
-    transition: none;
-    background-color: white;
-
-}
-//underline sa ramana dupa ce a fost departamentul selectat
 
 table{
     margin-left: auto;
@@ -95,6 +103,10 @@ td{
     border-radius: 10px 10px 10px 10px;
 }
 
+.xls-button{
+    align-items: center;
+}
+
 .save-button{
     padding-top: 20px;
     padding-left: 750px;
@@ -109,11 +121,11 @@ button {
     font-family: $text-font-family;
     color: $btn-text-color;
     font-weight: 600;
-  
     cursor: pointer;
   }
 
-  @media only screen and (max-width: 850px){
+
+@media only screen and (max-width: 850px){
     .save-button{
         padding-left: 550px;
     }
