@@ -1,21 +1,52 @@
-import React,{useState} from 'react'
-import {nanoid} from 'nanoid';
+import React,{useState,Fragment,useEffect} from 'react'
 //import {NavLink} from 'react-router-dom' //eroare-path changed
 import data from './data.json'
+import { nanoid } from "nanoid";
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import './tech.scss'
-import  IconButton  from '@material-ui/core/IconButton';
-import RemoveIcon from '@material-ui/icons/Remove';
-import AddIcon from '@material-ui/icons/Add';
+import ReadOnlyRow from '../components/ReadOnlyRow';
+import EditableRow from '../components/EditableRow';
+
 
 const getColor=(activitate)=>{
     if(activitate<2) return 'red';
     return ' ';
 };
 
-const Tech=()=> {
+
+var axios = require('axios');
+var Data = '';
+
+var config = {
+  method: 'get',
+  url: 'http://localhost:64975/api/Member',
+  Data : Data
+};
+
+axios(config)
+.then(function (response) {
+  console.log(JSON.stringify(response.Data));
+})
+.catch(function (error) {
+  console.log(error);
+});
+
+function Tech() {
     
     const[members, setMembers]=useState(data);
+
+    useEffect(()=> {
+        const text = localStorage.getItem("user");
+        if(text)
+         {
+          setMembers (JSON.parse(text));
+         }
+    }, []);
+    
+    useEffect(() => {
+        localStorage.setItem("user", JSON.stringify(members));
+    }, []);
+
     const[addFormData,setAddFormData]=useState({
         nume:'',
         prenume:'',
@@ -23,6 +54,43 @@ const Tech=()=> {
         nr_tel:'',
         mail:''
     })
+
+    const [editFormData, setEditFormData] = useState({
+        nume: "",
+        prenume: "",
+        activitate: "",
+        nr_tel: "",
+        mail: "",
+    });
+    
+    const handleEditFormChange = (event) => {
+        event.preventDefault();
+    
+        const fieldName = event.target.getAttribute("name");
+        const fieldValue = event.target.value;
+    
+        const newFormData = { ...editFormData };
+        newFormData[fieldName] = fieldValue;
+    
+        setEditFormData(newFormData);
+    }; 
+    
+    const handleEditClick = (event, member) => {
+        event.preventDefault();
+        setEditMemberId(member.id);
+    
+        const formValues = {
+          nume: member.nume,
+          prenume: member.prenume,
+          activitate: member.activitate,
+          nr_tel: member.nr_tel,
+          mail: member.mail,
+        };
+    
+        setEditFormData(formValues);
+    };
+
+    const [editMemberId, setEditMemberId] = useState(null);
 
     const handleAddFormChange=(event)=>{
         event.preventDefault();
@@ -37,10 +105,10 @@ const Tech=()=> {
     };
     
     const handleAddFormSubmit = (event) => {
-        event.preventDefault(); //prevents a post request
+        //event.preventDefault(); //prevents a post request
 
         const newMember={
-            id:nanoid(),
+            id: nanoid(),
             nume:addFormData.nume,
             prenume:addFormData.prenume,
             activitate:addFormData.activitate,
@@ -50,12 +118,61 @@ const Tech=()=> {
 
         const newMembers=[...members, newMember];
         setMembers(newMembers);
+
+        // Axios.post(url,{
+        //     nume:members.nume,
+        //     prenume:members.prenume,
+        //     activitate:members.activitate,
+        //     nr_tel:members.nr_tel,
+        //     mail:members.mail,
+        // })
+        // .then(res=>{
+        //     console.log(res.members)
+        // })
+        
+        console.log("membrii",newMembers);
     }
 
+    const handleEditFormSubmit = (event) => {
+        event.preventDefault();
+    
+        const editedMember = {
+          id: editMemberId,
+          nume: editFormData.nume,
+          prenume: editFormData.prenume,
+          activitate: editFormData.activitate,
+          nr_tel: editFormData.nr_tel,
+          mail: editFormData.mail,
+        };
+    
+        const newMembers = [...members];
+    
+        const index = members.findIndex((member) => member.id === editMemberId);
+    
+        newMembers[index] = editedMember;
+    
+        setMembers(newMembers);
+        setEditMemberId(null);
+      };
 
+    const handleCancelClick = () => {
+        setEditMemberId(null);
+    };
+
+
+    const handleDeleteClick = (memberId) => {
+        const newMembers = [...members];
+    
+        const index = members.findIndex((member) => member.id === memberId);
+    
+        newMembers.splice(index, 1);
+    
+        setMembers(newMembers);
+    };
 
     return (
         <div className="tabel-container">
+            <form onSubmit={handleEditFormSubmit}>
                 <div className="links"> 
                     <li>
                         <a className="active" href="tech">Tech</a>
@@ -71,46 +188,41 @@ const Tech=()=> {
                     </li>
                 
                 </div>
-            <table className="table" id="table-to-xls"> 
-                <thead>
-                    <tr>
-                        <th>Nume</th>
-                        <th>Prenume</th>
-                        <th>Numar perioade active</th>
-                        <th>Numar de telefon</th>
-                        <th>Adresa de mail institutionala</th>
-                    </tr>
-                
-                </thead> 
-                         
-                <tbody>
-                    {members.map((member,index)=>(
-                            <tr style={{color:getColor(member.activitate)}}>
-                            <td>{member.nume}</td>
-                            <td>{member.prenume}</td>
-                            <td>{member.activitate}</td>
-                            <td>{member.nr_tel}</td>
-                            <td>{member.mail}</td>
-                            <IconButton
-                                // onClick={()=>handleRemoveFields(index)}
-                            >
-                                {/* {index===0?(
-                                    <></>
-                                ):( */}
-                                    <RemoveIcon/>
-                                {/* )}  */}
-                            </IconButton>
-
-                            <IconButton
-                                // onClick={()=>handleAddFields()}
-                            >
-                                <AddIcon/>
-                             </IconButton>
+                <table className="table" id="table-to-xls"> 
+                    <thead>
+                        <tr>
+                            <th>Nume</th>
+                            <th>Prenume</th>
+                            <th>Numar perioade active</th>
+                            <th>Numar de telefon</th>
+                            <th>Adresa de mail institutionala</th>
                         </tr>
+                    
+                    </thead> 
+                            
+                    <tbody>
+                        {members.map((member,index)=>(
+                                //<tr style={{color:getColor(member.activitate)}}>
+                                <Fragment>
+                                    {editMemberId === member.id ? (
+                                    <EditableRow
+                                        editFormData={editFormData}
+                                        handleEditFormChange={handleEditFormChange}
+                                        handleCancelClick={handleCancelClick} />
+                                    ) : (
+
+                                    <ReadOnlyRow member={member}
+                                        handleEditClick={handleEditClick}
+                                        handleDeleteClick={handleDeleteClick} />
+                                    )}
+                                </Fragment>
+                            //</tr>
                         ))}
-                        
-                </tbody> 
-            </table>
+                            
+                    </tbody> 
+                </table>
+            </form>
+                
 
            
             <h3>Adauga un membru nou</h3>
@@ -159,7 +271,8 @@ const Tech=()=> {
                 </div>  
                 
                 <div className="save-button">
-                    <button type="submit">Adauga</button>
+                    <button
+                     type="submit">Adauga</button>
                 </div>  
             </form>
 
