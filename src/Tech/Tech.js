@@ -1,9 +1,9 @@
 import React,{useState} from 'react'
-import {NavLink} from 'react-router-dom' //eroare-path changed
+import {nanoid} from 'nanoid';
+//import {NavLink} from 'react-router-dom' //eroare-path changed
 import data from './data.json'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import './tech.scss'
-import TextField from 'material-ui/TextField'; 
 import  IconButton  from '@material-ui/core/IconButton';
 import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
@@ -13,34 +13,45 @@ const getColor=(activitate)=>{
     return ' ';
 };
 
-function Tech() {
+const Tech=()=> {
     
     const[members, setMembers]=useState(data);
+    const[addFormData,setAddFormData]=useState({
+        nume:'',
+        prenume:'',
+        activitate:'',
+        nr_tel:'',
+        mail:''
+    })
 
-    const[inputFields, setInputField]= useState([
-        { nume:'',prenume:'',activitate:'',nr_tel:'',mail:''},
-    ])
+    const handleAddFormChange=(event)=>{
+        event.preventDefault();
 
-    const handleChangeInput = (index, event) => {
-        const values = [...inputFields];
-        values[index][event.target.name] = event.target.value;
-        setInputField(values);
-    } 
+        const fieldName=event.target.getAttribute('name');
+        const fieldValue=event.target.value;
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log("InputField", inputFields);
+        const newFormData={...addFormData};
+        newFormData[fieldName]=fieldValue;
+
+        setAddFormData(newFormData);
+    };
+    
+    const handleAddFormSubmit = (event) => {
+        event.preventDefault(); //prevents a post request
+
+        const newMember={
+            id:nanoid(),
+            nume:addFormData.nume,
+            prenume:addFormData.prenume,
+            activitate:addFormData.activitate,
+            nr_tel:addFormData.nr_tel,
+            mail:addFormData.mail
+        };
+
+        const newMembers=[...members, newMember];
+        setMembers(newMembers);
     }
 
-    const handleAddFields = () => {
-        setInputField([...inputFields, { selectedDate: ' ' }])
-    }
-
-    const handleRemoveFields = (index) => {
-        const values = [...inputFields];
-        values.splice(index, 1);
-        setInputField(values);
-    }
 
 
     return (
@@ -73,37 +84,78 @@ function Tech() {
                 </thead> 
                          
                 <tbody>
-                    {inputFields.map((inputField, index,member)=>(
-                        <tr style={{color:getColor(member.activitate)}}
-                            onChange={event=>handleChangeInput(index,event)}>
-                            <td>Mihalache</td>
-                            <td>Andrei</td>
-                            <td>1</td>
-                            <td>073542935</td>
-                            <td>ceva19@stud.ase.ro</td>
+                    {members.map((member,index)=>(
+                            <tr style={{color:getColor(member.activitate)}}>
+                            <td>{member.nume}</td>
+                            <td>{member.prenume}</td>
+                            <td>{member.activitate}</td>
+                            <td>{member.nr_tel}</td>
+                            <td>{member.mail}</td>
                             <IconButton
-                                onClick={()=>handleRemoveFields(index)}
+                                // onClick={()=>handleRemoveFields(index)}
                             >
-                                {index===0?(
+                                {/* {index===0?(
                                     <></>
-                                ):(
+                                ):( */}
                                     <RemoveIcon/>
-                                )} 
+                                {/* )}  */}
                             </IconButton>
 
                             <IconButton
-                                onClick={()=>handleAddFields()}
+                                // onClick={()=>handleAddFields()}
                             >
                                 <AddIcon/>
                              </IconButton>
                         </tr>
-                    ))}
+                        ))}
                         
                 </tbody> 
             </table>
-            <div className="save-button">
-                <button onClick={handleSubmit}> save changes</button>
-            </div>
+
+            <h3>Adauga un membru nou</h3>
+            <form onSubmit={handleAddFormSubmit}>
+                <input
+                    type="text"
+                    name="nume"
+                    required="required"
+                    placeholder="Nume"
+                    onChange={handleAddFormChange}
+                />
+                <input
+                    type="text"
+                    name="prenume"
+                    required="required"
+                    placeholder="Prenume"
+                    onChange={handleAddFormChange}
+                />
+
+                <input
+                    type="text"
+                    name="activitate"
+                    required="required"
+                    placeholder="Activitate"
+                    onChange={handleAddFormChange}
+                />
+        
+                <input
+                    type="text"
+                    name="nr_tel"
+                    required="required"
+                    placeholder="Numar de telefon"
+                    onChange={handleAddFormChange}
+                />
+        
+                <input
+                    type="text"
+                    name="mail"
+                    required="required"
+                    placeholder="Email"
+                    onChange={handleAddFormChange}
+                />
+                <div className="save-button">
+                    <button type="submit">Adauga</button>
+                </div>  
+            </form>
 
 
             <div className="xls-button">
@@ -117,9 +169,9 @@ function Tech() {
                 />
             </div>
 
-
+                
         </div>
     )
 }
 
-export default Tech
+export default Tech;
