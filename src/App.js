@@ -1,6 +1,7 @@
 import Tech from './Tech/Tech';
 import Navbar from './Navbar/Navbar';
 import Footer from './Footer/Footer';
+
 import './App.css';
 
 function App() {
