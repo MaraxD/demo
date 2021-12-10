@@ -224,8 +224,11 @@ function Tech() {
             </form>
                 
 
+           
             <h3>Adauga un membru nou</h3>
+           
             <form onSubmit={handleAddFormSubmit}>
+            <div className="membru-buton">
                 <input
                     type="text"
                     name="nume"
@@ -233,6 +236,7 @@ function Tech() {
                     placeholder="Nume"
                     onChange={handleAddFormChange}
                 />
+                 
                 <input
                     type="text"
                     name="prenume"
@@ -264,6 +268,8 @@ function Tech() {
                     placeholder="Email"
                     onChange={handleAddFormChange}
                 />
+                </div>  
+                
                 <div className="save-button">
                     <button
                      type="submit">Adauga</button>
