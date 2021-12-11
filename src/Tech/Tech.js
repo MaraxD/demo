@@ -13,28 +13,30 @@ const getColor=(activitate)=>{
     return ' ';
 };
 
+require("es6-promise").polyfill();
+require("isomorphic-fetch");
 
-var axios = require('axios');
-var Data = '';
+const Tech=()=>{
 
-var config = {
-  method: 'get',
-  url: 'http://localhost:64975/api/Member',
-  Data : Data
-};
-
-axios(config)
-.then(function (response) {
-  console.log(JSON.stringify(response.Data));
-})
-.catch(function (error) {
-  console.log(error);
-});
-
-const Tech=()=> {
     
     const[members, setMembers]=useState(data);
+    const[Data,setData]=useState([]);
 
+    useEffect(()=>{
+        const url="http://localhost:64975/api/Member";
+
+        fetch(url,{
+            method:"get",
+            mode:'no-cors'
+        })
+        .then((response)=>response.json()) //turns the http response data into json data
+        .then((json)=>setData(json))
+        .catch(err=>{
+            console.log(err.message)
+        });
+   }, []);
+
+    
     useEffect(()=> {
         const text = localStorage.getItem("user");
         if(text)
@@ -294,3 +296,4 @@ const Tech=()=> {
 }
 
 export default Tech;
+
