@@ -31,7 +31,7 @@ axios(config)
   console.log(error);
 });
 
-function Tech() {
+const Tech=()=> {
     
     const[members, setMembers]=useState(data);
 
@@ -105,7 +105,7 @@ function Tech() {
     };
     
     const handleAddFormSubmit = (event) => {
-        //event.preventDefault(); //prevents a post request
+        event.preventDefault(); //prevents a post request
 
         const newMember={
             id: nanoid(),
@@ -153,7 +153,7 @@ function Tech() {
     
         setMembers(newMembers);
         setEditMemberId(null);
-      };
+    };
 
     const handleCancelClick = () => {
         setEditMemberId(null);
