@@ -20,6 +20,7 @@ $input-border-color: #4c4c4c;
 $text-font-family: Segoe UI, SegoeUI, "Helvetica Neue", Helvetica, Arial,
   sans-serif;
 
+
 @mixin mobile {
   @media (max-width: #{$width-mobile}) {
     @content;
