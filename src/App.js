@@ -3,6 +3,8 @@ import Navbar from './Navbar/Navbar';
 import Footer from './Footer/Footer';
 
 import './App.css';
+//schimb ceva
+
 
 function App() {
   return (
